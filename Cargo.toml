@@ -6,6 +6,10 @@ edition = "2018"
 description = "A `#[safe]` attribute for explaining why `unsafe { ... }` is OK."
 
 [dependencies]
+darling = "0.9.0"
+syn = "0.15.34"
+quote = "0.6.12"
+proc-macro2 = "0.4.30"
 
 [lib]
 proc-macro = true
