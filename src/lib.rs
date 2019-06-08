@@ -17,23 +17,41 @@ pub fn safe(attr: TokenStream, item: TokenStream) -> TokenStream {
         }
     };
 
-    let precondition = match args.precondition {
+    let requires = match args.requires {
         Some(ref assertion) => {
             let assertion: TokenStream = assertion.value().parse().unwrap();
             let assertion = parse_macro_input!(assertion as Expr);
             let reason = &args.reason;
             quote! {
-                debug_assert!(#assertion, "\"{}\" is invalid because the precondition failed", #reason);
+                debug_assert!(#assertion, "\"{}\" is invalid because the required condition failed", #reason);
             }
         }
         None => quote! {},
     };
 
-    let output = quote! {
-        {
-            #precondition
+    let ensures = match args.ensures {
+        Some(ref assertion) => {
+            let assertion: TokenStream = assertion.value().parse().unwrap();
+            let assertion = parse_macro_input!(assertion as Expr);
+            let reason = &args.reason;
+            quote! {
+                debug_assert!(#assertion, "\"{}\" is invalid because the ensured condition failed", #reason);
+            }
+        }
+        None => quote! {},
+    };
 
-            #item
+    let block = item.block;
+
+    let output = quote! {
+        unsafe {
+            #requires
+
+            let got = #block;
+
+            #ensures
+
+            got
         }
     };
 
@@ -47,5 +65,9 @@ struct Args {
     /// An assertion which will be run before entering the block in debug
     /// builds.
     #[darling(default)]
-    precondition: Option<LitStr>,
+    requires: Option<LitStr>,
+    /// An assertion which will be run after entering the unsafe block in debug
+    /// builds.
+    #[darling(default)]
+    ensures: Option<LitStr>,
 }

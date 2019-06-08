@@ -11,5 +11,8 @@ syn = "0.15.34"
 quote = "0.6.12"
 proc-macro2 = "0.4.30"
 
+[dev-dependencies]
+libc = "0.2"
+
 [lib]
 proc-macro = true
