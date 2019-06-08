@@ -55,6 +55,18 @@
 //!     allocated = libc::malloc(std::mem::size_of::<u32>()) as *mut u32;
 //! }
 //! ```
+//!
+//! # Nightly Feature Flags
+//!
+//! Applying custom attributes to `unsafe` blocks currently requires two
+//! `nightly` features:
+//!
+//! - `stmt_expr_attributes` - because `unsafe {}` is technically an expression
+//!   ([tracking issue](https://github.com/rust-lang/rust/issues/15701))
+//! - `proc_macro_hygiene` - the result of expanding the `#[safe]` macro is an
+//!   expression which, in general (but not in our case), can result in possible
+//!   hygiene issues
+//! ([tracking issue](https://github.com/rust-lang/rust/issues/54727))
 
 extern crate proc_macro;
 
