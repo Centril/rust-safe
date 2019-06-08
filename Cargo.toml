@@ -1,0 +1,18 @@
+[package]
+name = "safe"
+version = "0.1.0"
+authors = ["Michael Bryan <michaelfbryan@gmail.com>", "Mazdak Farrokhzad <twingoow@gmail.com>"]
+edition = "2018"
+description = "A `#[safe]` attribute for explaining why `unsafe { ... }` is OK."
+
+[dependencies]
+darling = "0.9.0"
+syn = "0.15.34"
+quote = "0.6.12"
+proc-macro2 = "0.4.30"
+
+[dev-dependencies]
+libc = "0.2"
+
+[lib]
+proc-macro = true
