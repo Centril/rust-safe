@@ -1,0 +1,15 @@
+language: rust
+sudo: false
+cache: cargo
+
+rust:
+  - stable
+  - 1.31.0
+
+env:
+  - RUST_BACKTRACE=full
+
+script:
+  - cargo build --verbose
+  - cargo test --verbose
+  - cargo doc --verbose
