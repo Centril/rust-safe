@@ -1,6 +1,6 @@
 # rust-safe
 
-[![Build Status](https://travis-ci.com/Centril/rust-safe.svg?branch=master)](https://travis-ci.com/Centril/rust-safe)
+[![Build Status](https://travis-ci.org/Centril/rust-safe.svg?branch=master)](https://travis-ci.org/Centril/rust-safe)
 [![Crates.io](https://img.shields.io/crates/v/mdbook.svg)](https://crates.io/crates/safe)
 [![Docs.rs](https://docs.rs/safe/badge.svg)](https://docs.rs/safe/badge.svg)
 
