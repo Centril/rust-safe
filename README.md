@@ -6,6 +6,36 @@
 
 A `#[safe]` attribute for explaining why `unsafe { ... }` is OK.
 
+## Getting Started
+
+This crate is mainly meant as a way to document your `unsafe` code. The simplest
+usage is to use a `#[safe(reason = "...")]` attribute:
+
+```rust,skt-main
+#[safe(reason = "All zeroes is a valid bit pattern for a `u8` array")]
+unsafe {
+  let buffer: [u8; 32] = std::mem::zeroed();
+}
+```
+
+You can also provide pre- and post-conditions with the `requires` and `ensures`
+arguments.
+
+```rust,skt-main
+const HELLO_WORLD: &[u8] = b"Hello, World!\0";
+
+let mut buffer: *mut c_char = std::ptr::null_mut();
+
+#[safe(reason = "This is a valid way to initialize a C-style string",
+        requires = "buffer.is_null()",
+        ensures = "libc::strlen(buffer) == HELLO_WORLD.len()-1")]
+unsafe {
+  buffer = libc::malloc(42) as *mut c_char;
+
+  libc::strcpy(buffer, HELLO_WORLD.as_ptr() as *const c_char);
+}
+```
+
 ## Nightly Rust
 
 Unfortunately, you'll need to be using `nightly` when this custom attribute is
